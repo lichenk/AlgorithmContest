@@ -1,0 +1,121 @@
+#include <bits/stdc++.h>
+#include <assert.h>
+using namespace std;
+typedef long long ll;
+typedef long double ld;
+#define PB push_back
+#define MP make_pair
+#define MOD 1000000007LL
+#define endl "\n"
+#define fst first
+#define snd second
+const ll UNDEF = -1;
+const ll INF=1e18;
+template<typename T> inline bool chkmax(T &aa, T bb) { return aa < bb ? aa = bb, true : false; }
+template<typename T> inline bool chkmin(T &aa, T bb) { return aa > bb ? aa = bb, true : false; }
+typedef pair<ll,ll> pll;
+typedef vector<ll> vll;
+typedef pair<int,int> pii;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+#define DEBUG_CAT
+#ifdef DEBUG_CAT
+
+#define dbg(...)   printf( __VA_ARGS__ )
+#else 
+#define dbg(...)   /****nothing****/
+#endif
+static char stdinBuffer[1024];
+static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
+static const char* stdinPos = stdinDataEnd;
+
+void readAhead(size_t amount)
+{
+    size_t remaining = stdinDataEnd - stdinPos;
+    if (remaining < amount) {
+       memmove(stdinBuffer, stdinPos, remaining);
+       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
+       stdinPos = stdinBuffer;
+       stdinDataEnd = stdinBuffer + remaining + sz;
+       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
+         *stdinDataEnd = 0;
+    }
+}
+
+int readInt()
+{
+    readAhead(16);
+
+    int x = 0;
+    bool neg = false;
+    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
+    if (*stdinPos == '-') {
+       ++stdinPos;
+       neg = true;
+    }
+
+    while (*stdinPos >= '0' && *stdinPos <= '9') {
+       x *= 10;
+       x += *stdinPos - '0';
+       ++stdinPos;
+    }
+
+    return neg ? -x : x;
+}
+char readCh()
+{
+    readAhead(16);
+    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
+    char ans=*stdinPos;
+    ++stdinPos;
+    return ans;
+}
+int a[102];
+char vact[22];
+int i2t[22];
+int i2k[22];
+vector<int> t2i[3];
+int main() 
+{
+	ios_base::sync_with_stdio(false); cin.tie(0);
+	int n; scanf("%d",&n);
+  for (int i=0;i<n;i++) scanf("%d",&a[i]);
+  sort(a,a+n,greater<int>());
+  int k; scanf("%d\n",&k);
+  for (int i=0;i<k;i++) {
+    scanf("%c %d\n",&vact[i],&i2t[i]);
+    i2k[i]=t2i[i2t[i]].size();
+    t2i[i2t[i]].PB(i);
+  }
+  int sz[3]; for (int t=1;t<=2;t++) sz[t]=t2i[t].size();
+  int z[3];
+  int final=-1e9;
+  for (z[1]=0;z[1]<(1<<sz[1]);z[1]++) {
+    int best=1e9;
+    for (z[2]=0;z[2]<(1<<sz[2]);z[2]++) {
+      int score=0;
+      int hero=0;
+      int ban[3];
+      ban[1]=ban[2]=0;
+      for (int i=0;i<k;i++) {
+        int t=i2t[i];
+        if (vact[i]=='p') {
+          hero+=ban[t];
+          //if (ban[t]) printf("i:%d t:%d bant:%d\n",i,t,ban[t]);
+          ban[t]=0;
+          if (t==1) score+=a[hero++];
+          else score-=a[hero++];
+        }
+        else {
+          int bit=(z[t]>>i2k[i])&1;
+          if (bit) ban[t^3]++;
+        }
+      }
+      //printf("z1:%d z2:%d score:%d\n",z[1],z[2],score);
+      chkmin(best,score);
+    }
+    chkmax(final,best);
+  }
+  printf("%d\n",final);
+}
+
