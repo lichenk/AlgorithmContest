@@ -1,4 +1,4 @@
-My solutions to algorithm contests.
+My (Li Chen Koh's) solutions to algorithm contests.
 
 Google Code Jam problems:
 Some of my selected Google Code Jam solutions.
