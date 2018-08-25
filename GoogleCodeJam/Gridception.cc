@@ -122,7 +122,7 @@ int getMaximumPatternSize(const vector<string> &startingGrid) {
     }
   }
 
-  int answer = 0;
+  int maximumPatternSize = 0;
   // Try every possible 2x2 subgrid
   for (const string &twoByTwoSubgrid: twoByTwoSubgrids) {
     // Try every possible geometric translation by 2D integer vectors
@@ -139,10 +139,10 @@ int getMaximumPatternSize(const vector<string> &startingGrid) {
         for (int row = 0; row < numberOfRows; row++) {
           for (int column = 0; column < numberOfColumns; column++) {
             int position = 0;
-            if (row > boundaryRow) {
+            if (column > boundaryColumn) {
               position += 1;
             }
-            if (column > boundaryColumn) {
+            if (row > boundaryRow) {
               position += 2;
             }
             // match[row][column] is true if and only if the expanded 2x2
@@ -158,8 +158,8 @@ int getMaximumPatternSize(const vector<string> &startingGrid) {
         for (int row = 0; row < numberOfRows; row++) {
           for (int column = 0; column < numberOfColumns; column++) {
             if (match[row][column] && (!seen[row][column])) {
-              answer = max(
-                answer,
+              maximumPatternSize = max(
+                maximumPatternSize,
                 dfs(row, column, numberOfRows, numberOfColumns)
               );
             }
@@ -168,6 +168,7 @@ int getMaximumPatternSize(const vector<string> &startingGrid) {
       }
     }
   }
+  return maximumPatternSize;
 }
 
 // Reads a test case data, which is the 2D starting grid.

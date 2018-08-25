@@ -108,10 +108,10 @@ int getMaximumNumberOfGroupsWithFreshPacks(
         );
       }
     }
+    // Did we open new packs for everyone in this group?
+    if (leftoverPieces == 0) maximumGroupsWithFreshPacks++;
   }
 
-  // Did we open new packs for everyone in this group?
-  if (leftoverPieces == 0) maximumGroupsWithFreshPacks++;
   // Save value to DP table.
   dpTable[leftoverPieces][groupCountId] = maximumGroupsWithFreshPacks;
   return maximumGroupsWithFreshPacks;
