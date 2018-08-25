@@ -21,42 +21,10 @@ typedef vector<ll> vll;
 #else 
 #define dbg(...)   /****nothing****/
 #endif
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 const int mn=1004;
 int f[2][2][mn][mn];
@@ -93,8 +61,8 @@ pair<int, pair<int,int> > go(int xz, int yz, int cx, int cy, int choosex) {
 int main() 
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	n=readInt(),m=readInt();
-  for (int i=1;i<=n;i++) for (int j=1;j<=m;j++) a[i][j]=readInt();
+	n=rint(),m=rint();
+  for (int i=1;i<=n;i++) for (int j=1;j<=m;j++) a[i][j]=rint();
   for (int xz=0;xz<2;xz++) for (int yz=0;yz<2;yz++) init(xz,yz);
   int final=0;
   for (int x=1;x<=n;x++) for (int y=1;y<=m;y++) {

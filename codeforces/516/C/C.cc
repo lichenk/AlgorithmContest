@@ -16,42 +16,10 @@ template<typename T> inline bool chkmin(T &aa, T bb) { return aa > bb ? aa = bb,
 typedef pair<ll,ll> pll;
 typedef vector<ll> vll;
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 
 struct SS {
@@ -94,9 +62,9 @@ int h[MAXN],d[MAXN];
 int main() 
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-  int n=readInt(),m=readInt();
-  for (int i=0;i<n;i++) d[i]=readInt();
-  for (int i=0;i<n;i++) h[i]=readInt();
+  int n=rint(),m=rint();
+  for (int i=0;i<n;i++) d[i]=rint();
+  for (int i=0;i<n;i++) h[i]=rint();
   segn=2*n;
   for (int i=0;i<n;i++) {
     t[segn+i].bestInternal=0;
@@ -107,7 +75,7 @@ int main()
   }
   build(segn);
   for (int i=0;i<m;i++) {
-    int a=readInt()-1,b=readInt()-1;
+    int a=rint()-1,b=rint()-1;
     int l,r;
     if (a<=b) {
       l=b+1,r=n+a-1;

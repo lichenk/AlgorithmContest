@@ -25,50 +25,14 @@ typedef vector<vi> vvi;
 #else 
 #define dbg(...)   /****nothing****/
 #endif
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
+  int x; scanf("%d",&x); return x;
 }
-
-int readInt()
+char rch()
 {
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
-}
-char readCh()
-{
-    readAhead(16);
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    char ans=*stdinPos;
-    ++stdinPos;
-    return ans;
+  char x; scanf("%c",&x); return x;
 }
 
 
@@ -386,15 +350,15 @@ HeavyLight2NoRecursion hl;
 int main()
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	int n=readInt(),m=readInt(),q=readInt();
+	int n=rint(),m=rint(),q=rint();
   tree.resize(n);
   for (int i=0;i<n-1;i++) {
-    int x=readInt()-1,y=readInt()-1;
+    int x=rint()-1,y=rint()-1;
     tree[x].PB(y); tree[y].PB(x);
     //printf("x:%d y:%d\n",x,y);
   }
   for (int i=1;i<=m;i++) {
-    int c=readInt()-1;
+    int c=rint()-1;
     inp[c].PB(i);
     //printf("c:%d i:%d\n",c,i);
   }
@@ -407,7 +371,7 @@ int main()
   }
   hl.initInput();
   for (int i=0;i<q;i++) {
-    int x=readInt()-1,y=readInt()-1,a=readInt();
+    int x=rint()-1,y=rint()-1,a=rint();
     //printf("x:%d y:%d a:%d\n",x,y,a);
     STV got=hl.query(x,y);
     int len=min(a,got.len);

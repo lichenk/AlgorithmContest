@@ -25,50 +25,14 @@ typedef vector<vi> vvi;
 #else 
 #define dbg(...)   /****nothing****/
 #endif
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
+  int x; scanf("%d",&x); return x;
 }
-
-int readInt()
+char rch()
 {
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
-}
-char readCh()
-{
-    readAhead(16);
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    char ans=*stdinPos;
-    ++stdinPos;
-    return ans;
+  char x; scanf("%c",&x); return x;
 }
 
 template<class T> T extgcd(T a, T b, T& x, T& y) { for (T u = y = 1, v = x = 0; a;) { T q = b / a; swap(x -= q * u, u); swap(y -= q * v, v); swap(b -= q * a, a); } return b; }
@@ -105,10 +69,10 @@ int main()
 	ios_base::sync_with_stdio(false); cin.tie(0);
   init();
   for (int x=0;x<mn;x++) for (int y=0;y<=x;y++) vbinom[x][y]=binom(x,y);
-	int n=readInt(),k=readInt()/50;
+	int n=rint(),k=rint()/50;
   int xlim=0;
   for (int i=0;i<n;i++) {
-    if (readInt()==50) xlim++;
+    if (rint()==50) xlim++;
   }
   int ylim=n-xlim;
   if ((ylim>0&&k<2)||(xlim>0&&k<1)) {

@@ -15,51 +15,19 @@ template<typename T> inline bool chkmax(T &aa, T bb) { return aa < bb ? aa = bb,
 template<typename T> inline bool chkmin(T &aa, T bb) { return aa > bb ? aa = bb, true : false; }
 typedef pair<ll,ll> pll;
 typedef vector<ll> vll;
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 
 const ll mn=1000*1000;
 ll dp[mn+1];
 int main()
 {
-	ll n=readInt();
+	ll n=rint();
 	for (ll i=0;i<n;i++) {
-		ll x=readInt();
+		ll x=rint();
 		dp[x]++;
 	}
 	ll final=0;

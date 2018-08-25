@@ -25,50 +25,14 @@ typedef vector<vi> vvi;
 #else 
 #define dbg(...)   /****nothing****/
 #endif
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
+  int x; scanf("%d",&x); return x;
 }
-
-int readInt()
+char rch()
 {
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
-}
-char readCh()
-{
-    readAhead(16);
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    char ans=*stdinPos;
-    ++stdinPos;
-    return ans;
+  char x; scanf("%c",&x); return x;
 }
 const int mn=40;
 bool a[mn][mn];
@@ -77,10 +41,10 @@ int c[mn][mn][mn][mn];
 int main() 
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	int n=readInt(),m=readInt(),q=readInt();
+	int n=rint(),m=rint(),q=rint();
   for (int x=0;x<n;x++) {
     for (int y=0;y<m;y++) {
-      a[x][y]=readCh()-'0';
+      a[x][y]=rch()-'0';
       //printf("%d",a[x][y]);
     }
     //printf("\n");
@@ -142,7 +106,7 @@ int main()
     }
   }
   for (int i=0;i<q;i++) {
-    int xlo=readInt(),ylo=readInt(),xhi=readInt(),yhi=readInt();
+    int xlo=rint(),ylo=rint(),xhi=rint(),yhi=rint();
     int ans=c[xlo-1][xhi-1][ylo-1][yhi-1];
     printf("%d\n",ans);
   }

@@ -17,42 +17,10 @@ typedef pair<ll,ll> pll;
 typedef vector<ll> vll;
 
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 
 
@@ -85,9 +53,9 @@ int va[maxn];
 ll *vs[maxn],*vt[maxn],*vgcd[maxn];
 int main()
 {
-	int n=readInt(); int k=readInt();
+	int n=rint(); int k=rint();
 	for (int i=0;i<n;i++) {
-		va[i]=readInt();
+		va[i]=rint();
 	}
 	for (int i=0;i<n;i++) {
 		vs[i]=get(i);
@@ -105,9 +73,9 @@ int main()
 			vgcd[x][y]=gcd;
 		}
 	}
-	int q=readInt();
+	int q=rint();
 	for (int i=0;i<q;i++) {
-		int target=readInt();
+		int target=rint();
 		int ans=INF;
 		for (int x=0;x<n;x++) {
 			int a=va[x];

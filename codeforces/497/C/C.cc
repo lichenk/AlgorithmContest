@@ -16,42 +16,10 @@ template<typename T> inline bool chkmin(T &aa, T bb) { return aa > bb ? aa = bb,
 typedef pair<ll,ll> pll;
 typedef vector<ll> vll;
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 const int mn=1e5+4;
 int vk[mn];
@@ -63,15 +31,15 @@ map<int,queue<int> > h;
 int main()
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	int n=readInt();
+	int n=rint();
   for (int part_id=1;part_id<=n;part_id++) {
-    int a=readInt(),b=readInt();
+    int a=rint(),b=rint();
     vp.PB(MP(MP(a,b),part_id));
   }
   sort(vp.begin(),vp.end());
-  int m=readInt();
+  int m=rint();
   for (int actid=1;actid<=m;actid++) {
-    int c=readInt();vd[actid]=readInt(),vk[actid]=readInt();
+    int c=rint();vd[actid]=rint(),vk[actid]=rint();
     hactor[c].PB(actid);
   }
   auto hait=hactor.begin();

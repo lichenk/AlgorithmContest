@@ -25,42 +25,10 @@ typedef vector<vi> vvi;
 #else 
 #define dbg(...)   /****nothing****/
 #endif
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 
 typedef vector<int> vi;
@@ -156,8 +124,8 @@ int main()
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
 	test(); return 0;
-  int n=readInt();
-  for (int x=0;x<n;x++) for (int y=0;y<n;y++) g[x][y]=readInt();
+  int n=rint();
+  for (int x=0;x<n;x++) for (int y=0;y<n;y++) g[x][y]=rint();
   bool final=solve(n);
   if (final) printf("YES\n");
   else printf("NO\n");

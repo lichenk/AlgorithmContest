@@ -22,42 +22,10 @@ typedef vector<ll> vll;
 #else 
 #define dbg(...)   /****nothing****/
 #endif
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 
 const int MAXSEG = 131072;  // limit for array size
@@ -121,28 +89,28 @@ void domod(int l, int r, int mod) {
 int main() 
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-  int n=readInt(),m=readInt();
+  int n=rint(),m=rint();
   segn=1;
   while((segn-1)<n) segn*=2;
   for (int x=1;x<=n;x++) {
-    int v=readInt();
+    int v=rint();
     t[segn+x]=MP(v,v);
   }
   build();
   for (int i=0;i<m;i++) {
-    int type=readInt();
+    int type=rint();
     dbg("type:%d\n",type);
     if (type==1) {
-      int l=readInt(),r=readInt();
+      int l=rint(),r=rint();
       auto got=query(l,r);
       printf("%lld\n",got.fst);
     }
     else if (type==2) {
-      int l=readInt(),r=readInt(),mod=readInt();
+      int l=rint(),r=rint(),mod=rint();
       domod(l,r,mod);
     }
     else {
-      int k=readInt(),x=readInt();
+      int k=rint(),x=rint();
       modify(k,MP(x,x));
     }
   }

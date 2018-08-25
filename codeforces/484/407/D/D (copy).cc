@@ -22,42 +22,10 @@ typedef vector<ll> vll;
 #else 
 #define dbg(...)   /****nothing****/
 #endif
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 const int maxn=400;
 const int maxv=400*400;
@@ -126,9 +94,9 @@ int main()
   //test();
   //return 0;
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	int n=readInt(),m=readInt();
+	int n=rint(),m=rint();
   for (int x=0;x<n;x++) for (int y=0;y<m;y++) {
-    a[x][y]=readInt()-1;
+    a[x][y]=rint()-1;
   }
   for (int xlo=n-1;xlo>=0;xlo--) {
     memset(vylo,0,sizeof vylo);

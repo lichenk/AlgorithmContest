@@ -16,51 +16,15 @@ template<typename T> inline bool chkmin(T &aa, T bb) { return aa > bb ? aa = bb,
 typedef pair<ll,ll> pll;
 typedef vector<ll> vll;
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
+  int x; scanf("%d",&x); return x;
 }
 
-int readInt()
+char rch()
 {
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
-}
-
-char readCh()
-{
-    readAhead(16);
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    char ans=*stdinPos;
-    ++stdinPos;
-    return ans;
+  char x; scanf("%c",&x); return x;
 }
 
 const int mp=60;
@@ -122,7 +86,7 @@ S one[7];
 int main() 
 {
   ios_base::sync_with_stdio(false); cin.tie(0);
-  int n=readInt();
+  int n=rint();
   segn=n+1;
   for (int x=2;x<=6;x++) {
     one[x].len=1;
@@ -131,15 +95,15 @@ int main()
     }
   }
   for (int i=0;i<n;i++) {
-    int per=readInt();
+    int per=rint();
     t[segn+i]=one[per];
   }
   build(segn);
   S tmp=combine(one[4],one[2]);
   //printf("tmp:a[0]:%d\n",tmp.a[0]);
-  int q=readInt();
+  int q=rint();
   for (int i=0;i<q;i++) {
-    int c=readCh(),x=readInt(),y=readInt();
+    int c=rch(),x=rint(),y=rint();
     if (c=='A') {
       --x; --y;
       S q=query(x,y-1);

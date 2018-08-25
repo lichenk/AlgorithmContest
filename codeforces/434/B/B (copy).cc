@@ -20,42 +20,10 @@ typedef vector<ll> vll;
 #else 
 #define dbg(...)   /****nothing****/
 #endif
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 const int mn=1004;
 int vl[mn][mn],vr[mn][mn];
@@ -135,15 +103,15 @@ void solve(int n, int m) {
 int main()
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-  int n=readInt(),m=readInt(); q=readInt();
+  int n=rint(),m=rint(); q=rint();
   for (int i=0;i<n;i++) {
     for (int j=0;j<m;j++) {
-      oa[i][j]=readInt();
+      oa[i][j]=rint();
     }
     a[i]=oa[i];
   }
   for (int i=0;i<q;i++) {
-    qop[i]=readInt(),vqx[i]=readInt()-1,vqy[i]=readInt()-1;
+    qop[i]=rint(),vqx[i]=rint()-1,vqy[i]=rint()-1;
   }
   solve(n,m);
   for (int i=0;i<n;i++) for (int j=0;j<m;j++) a[i][j]=oa[j][i];

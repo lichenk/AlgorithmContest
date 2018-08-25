@@ -16,42 +16,10 @@ template<typename T> inline bool chkmin(T &aa, T bb) { return aa > bb ? aa = bb,
 typedef pair<ll,ll> pll;
 typedef vector<ll> vll;
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 int segn;
 void modify(int *t, int l, int r, int value) {
@@ -91,11 +59,11 @@ int vt[2*mn],vl[mn],vr[mn],vq[mn];
 int main() 
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	int n=readInt(),m=readInt();
-  //for (int i=1;i<=n;i++) {a[i]=readInt();}
+	int n=rint(),m=rint();
+  //for (int i=1;i<=n;i++) {a[i]=rint();}
   segn=n+1;
   for (int i=0;i<m;i++) {
-    vl[i]=readInt(),vr[i]=readInt(),vq[i]=readInt();
+    vl[i]=rint(),vr[i]=rint(),vq[i]=rint();
     modify(vt,vl[i],vr[i],vq[i]);
   }
   push(vt);

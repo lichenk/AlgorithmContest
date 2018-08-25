@@ -21,42 +21,10 @@ typedef vector<ll> vll;
 #else 
 #define dbg(...)   /****nothing****/
 #endif
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 /*const int mn=20;
 int a[mn][mn];
@@ -145,9 +113,9 @@ int main()
   //tester();
   //return 0;
 	ios_base::sync_with_stdio(false); cin.tie(0);
-  int q=readInt();
+  int q=rint();
   for (int ii=0;ii<q;ii++) {
-    int x1=readInt(),y1=readInt(),x2=readInt(),y2=readInt(),_k=readInt();
+    int x1=rint(),y1=rint(),x2=rint(),y2=rint(),_k=rint();
     --x1;--y1;
     int ans=query(x2,y2,_k)-query(x2,y1,_k)-query(x1,y2,_k)+query(x1,y1,_k);
     ans%=MOD;

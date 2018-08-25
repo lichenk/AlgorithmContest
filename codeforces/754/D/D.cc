@@ -17,42 +17,10 @@ typedef pair<ll,ll> pll;
 typedef vector<ll> vll;
 
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 
 
@@ -62,9 +30,9 @@ ll vl[mn],vr[mn];
 int main()
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	ll n=readInt(),k=readInt();
+	ll n=rint(),k=rint();
 	for (ll i=1;i<=n;i++) {
-		ll l=readInt(),r=readInt();
+		ll l=rint(),r=rint();
 		vl[i]=l;vr[i]=r;
 		h[l].fst.PB(i);
 		h[r].snd.PB(i);

@@ -25,50 +25,14 @@ typedef vector<vi> vvi;
 #else 
 #define dbg(...)   /****nothing****/
 #endif
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
+  int x; scanf("%d",&x); return x;
 }
-
-int readInt()
+char rch()
 {
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
-}
-char readCh()
-{
-    readAhead(16);
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    char ans=*stdinPos;
-    ++stdinPos;
-    return ans;
+  char x; scanf("%c",&x); return x;
 }
 const int mn=3e5+2;
 vector<int> g[mn];
@@ -123,18 +87,18 @@ void dfs(int x) {
 int main() 
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	int n=readInt();
+	int n=rint();
   for (int x=2;x<=n;x++) {
-    int p=readInt();
+    int p=rint();
     g[p].PB(x);
   }
   dfs(1);
   segn=git;
-  int q=readInt();
+  int q=rint();
   for (int jj=0;jj<q;jj++) {
-    int t=readInt(),v=readInt();
+    int t=rint(),v=rint();
     if (t==1) {
-      ll x=readInt(),k=readInt();
+      ll x=rint(),k=rint();
       x+=k*lvl[v];
       x%=MOD;
       if (x<0) x+=MOD;

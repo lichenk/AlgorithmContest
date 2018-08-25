@@ -22,42 +22,10 @@ typedef vector<ll> vll;
 #define dbg(...)   /****nothing****/
 #endif
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 
 const int mn=100000;
@@ -184,15 +152,15 @@ void sqrt_build() {
 int main()
 {
   ios_base::sync_with_stdio(false); cin.tie(0);
-  n=readInt();
+  n=rint();
   for (int i=0;i<n;i++) {
-    a[i]=readInt();
+    a[i]=rint();
   }
   sqrt_build();
-  int q=readInt();
+  int q=rint();
   int lastans=0;
   for (int i=0;i<q;i++) {
-    int t=readInt(),lp=readInt(),rp=readInt();
+    int t=rint(),lp=rint(),rp=rint();
     int l=lp+lastans-1; if (l>=n) l-=n;
     int r=rp+lastans-1; if (r>=n) r-=n;
     if (l>r) swap(l,r); 
@@ -200,7 +168,7 @@ int main()
       sqrt_modify(l,r);
     }
     else {
-      int kp=readInt();
+      int kp=rint();
       int k=kp+lastans-1; if (k>=n) k-=n;
       k++;
       //printf("l:%d r:%d k:%d\n",l,r,k);

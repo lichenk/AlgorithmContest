@@ -16,42 +16,10 @@ template<typename T> inline bool chkmin(T &aa, T bb) { return aa > bb ? aa = bb,
 typedef pair<ll,ll> pll;
 typedef vector<ll> vll;
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 
 
@@ -92,10 +60,10 @@ void update_nodes(ll input_id) {
 int main()
 {
 	active.set();
-	ll n=readInt();
+	ll n=rint();
 	for (ll v=1;v<=n;v++) node2cnt[v]=4;
 	for (ll id=1;id<=4*n;id++) {
-		ll a=readInt(),b=readInt(),c=readInt();
+		ll a=rint(),b=rint(),c=rint();
 		id2node[id][0]=a;
 		id2node[id][1]=b;
 		id2node[id][2]=c;

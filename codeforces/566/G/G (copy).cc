@@ -37,42 +37,10 @@ vector<point> convexHull(vector<point> dat) {
 	return upper;
 }
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 map<ll,ll> h;
 void ins(ll x, ll y) {
@@ -90,14 +58,14 @@ void ins(ll x, ll y) {
 int main()
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	int n=readInt(),m=readInt();
-	int ox=readInt(),oy=readInt();
+	int n=rint(),m=rint();
+	int ox=rint(),oy=rint();
 	for (int i=0;i<n;i++) {
-		int x=readInt(),y=readInt();
+		int x=rint(),y=rint();
 		vmax.insert(MP(x,y));
 	}
 	for (int i=0;i<m;i++) {
-		int x=readInt(),y=readInt();
+		int x=rint(),y=rint();
 		vmin.insert(MP(x,y));
 	}
 	printf("Max\n");

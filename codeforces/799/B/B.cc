@@ -16,42 +16,10 @@ template<typename T> inline bool chkmin(T &aa, T bb) { return aa > bb ? aa = bb,
 typedef pair<ll,ll> pll;
 typedef vector<ll> vll;
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 const int mn=2e5+4;
 int p[mn],a[mn],b[mn];
@@ -59,16 +27,16 @@ set<int> h[4][4];
 int main()
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	int n=readInt();
-  for (int i=0;i<n;i++) p[i]=readInt();
-  for (int i=0;i<n;i++) a[i]=readInt();
-  for (int i=0;i<n;i++) b[i]=readInt();
+	int n=rint();
+  for (int i=0;i<n;i++) p[i]=rint();
+  for (int i=0;i<n;i++) a[i]=rint();
+  for (int i=0;i<n;i++) b[i]=rint();
   for (int i=0;i<n;i++) {
     h[a[i]][b[i]].insert(p[i]);
   }
-  int m=readInt();
+  int m=rint();
   for (int i=0;i<m;i++) {
-    int c=readInt();
+    int c=rint();
     pair<int,pair<int,int> > ans=MP(2e9+4,MP(-1,-1));
     for (int k=1;k<=3;k++) {
       if (h[c][k].size()>0) {

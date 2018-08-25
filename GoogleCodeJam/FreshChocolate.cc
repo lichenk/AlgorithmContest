@@ -1,6 +1,6 @@
 /*
-Li Chen Koh's solution to Google Code Jam 2017 Round 2 Problem A
-This is adapted from my original submission during the contest.
+Li Chen Koh's solution to Google Code Jam 2017 Round 2 Problem A "Fresh Chocolate"
+This is adapted from my original submission during the live contest.
 
 Full problem statement:
 https://code.google.com/codejam/contest/5314486/dashboard#s=p0
@@ -21,7 +21,7 @@ tour group before opening up any new packs.
 You would like to maximize the number of groups such that everyone in the group
 receives chocolate from packs that were opened on the same day as their visit.
 
-Limits: 1<= N, G_i <=100. 1<=P<=4.
+Limits: 1 <= N, G_i <=100. 1 <= P <= 4.
 
 Solution:
 
@@ -51,21 +51,20 @@ using namespace std;
 // memory allocation is very slow.
 const int MAXP = 4;
 const int MAXN = 101;
-// dpTable[leftoverPieces][groupCountIndex] is the maximum number of groups
+// dpTable[leftoverPieces][groupCountId] is the maximum number of groups
 // that have a freshly opened pack, if you have leftoverPieces chocolates
-// leftover, and you have a configuration of groups that bijects to
-// groupCountIndex.
+// leftover, and you have a configuration of groups that has id groupCountId
 int dpTable[MAXP][MAXN*MAXN*MAXN*MAXN];
 
-// Bijects a vector of groupCounts to an integer, which can be used to index
-// into the dpTable.
-int getGroupCountDpTableIndex(const vector<int> &groupCounts) {
-	int index = 0;
-	for (const int groupCount: groupCounts) {
-		index *= MAXN;
-		index += groupCount;
-	}
-	return index;
+// Converts a vector of groupCounts to a unique integer ID that is between
+// 0 and MAXN^4 - 1. We use this to index into dpTable.
+int getGroupCountId(const vector<int> &groupCounts) {
+  int groupCountId = 0;
+  for (const int groupCount: groupCounts) {
+    groupCountId *= MAXN;
+    groupCountId += groupCount;
+  }
+  return groupCountId;
 }
 
 // Given the following parameters:
@@ -76,66 +75,67 @@ int getGroupCountDpTableIndex(const vector<int> &groupCounts) {
 // This function returns the maximum number of groups such that everyone in
 // the group received a freshly opened pack on the same day.
 int getMaximumNumberOfGroupsWithFreshPacks(
-	const vector<int> &groupCounts,
-	const int leftoverPieces,
-	const int piecesPerPack
+  const vector<int> &groupCounts,
+  const int leftoverPieces,
+  const int piecesPerPack
 ) {
-	// If we've computed this before, then we can return the memoized value.
-	int dpTableIndex = getGroupCountDpTableIndex(groupCounts);
-	if (dpTable[leftoverPieces][dpTableIndex] != -1) {
-		return dpTable[leftoverPieces][dpTableIndex];
-	}
+  // If we've computed this before, then we can return the memoized value.
+  int groupCountId = getGroupCountId(groupCounts);
+  if (dpTable[leftoverPieces][groupCountId] != -1) {
+    return dpTable[leftoverPieces][groupCountId];
+  }
 
   // Recursion step
-	int numberOfGroups = 0;
-	for (int sizeModuloP = 0; sizeModuloP < piecesPerPack; sizeModuloP++) {
-		numberOfGroups += groupCounts[sizeModuloP];
-	}
-	int maximumGroupsWithFreshPacks = 0;
-	if (numberOfGroups > 0) {
-		for (int sizeModuloP = 0; sizeModuloP < piecesPerPack; sizeModuloP++) {
-			if (groupCounts[sizeModuloP] > 0) {
-				// The vector<int> allocation here is expensive. My original contest
-				// submission actually passes 4 integers instead of a vector<int>.
-				vector<int> newGroupCounts = groupCounts;
-				newGroupCounts[sizeModuloP]--;
-				maximumGroupsWithFreshPacks = max(
-					maximumGroupsWithFreshPacks,
-					getMaximumNumberOfGroupsWithFreshPacks(
-						newGroupCounts,
-						(leftoverPieces + piecesPerPack - sizeModuloP) % piecesPerPack,
-						piecesPerPack
-					)
-				);
-			}
-		}
-	}
+  int numberOfGroups = 0;
+  for (int sizeModuloP = 0; sizeModuloP < piecesPerPack; sizeModuloP++) {
+    numberOfGroups += groupCounts[sizeModuloP];
+  }
+  int maximumGroupsWithFreshPacks = 0;
+  if (numberOfGroups > 0) {
+    for (int sizeModuloP = 0; sizeModuloP < piecesPerPack; sizeModuloP++) {
+      if (groupCounts[sizeModuloP] > 0) {
+        // The vector<int> allocation here is expensive. My original contest
+        // submission actually passes 4 integers instead of a vector<int>.
+        vector<int> newGroupCounts = groupCounts;
+        newGroupCounts[sizeModuloP]--;
+        maximumGroupsWithFreshPacks = max(
+          maximumGroupsWithFreshPacks,
+          getMaximumNumberOfGroupsWithFreshPacks(
+            newGroupCounts,
+            (leftoverPieces + piecesPerPack - sizeModuloP) % piecesPerPack,
+            piecesPerPack
+          )
+        );
+      }
+    }
+  }
 
-	// Did we open new packs for everyone in this group?
-	if (leftoverPieces == 0) maximumGroupsWithFreshPacks++;
-	// Save value to DP table.
-	dpTable[leftoverPieces][dpTableIndex] = maximumGroupsWithFreshPacks;
-	return maximumGroupsWithFreshPacks;
+  // Did we open new packs for everyone in this group?
+  if (leftoverPieces == 0) maximumGroupsWithFreshPacks++;
+  // Save value to DP table.
+  dpTable[leftoverPieces][groupCountId] = maximumGroupsWithFreshPacks;
+  return maximumGroupsWithFreshPacks;
 }
 
 int main()
 {
-	int numberOfTests; scanf("%d", &numberOfTests);
-	for (int testNumber = 1; testNumber <= numberOfTests; testNumber++) {
-		int numberOfGroups, piecesPerPack;
-		scanf("%d%d", &numberOfGroups, &piecesPerPack);
-		vector<int> groupCounts(4, 0);
-		for (int groupIndex = 0; groupIndex < numberOfGroups; groupIndex++) {
-			int numberOfPeopleInGroup;
-			scanf("%d",&numberOfPeopleInGroup);
-			groupCounts[numberOfPeopleInGroup % piecesPerPack]++;
-		}
-		for (int pieces = 0; pieces < piecesPerPack; pieces++) {
-			// Fill dpTable with 0xff bytes, which is equal to -1 casted as both char
-			// and int. memset is very fast as it uses SSE instructions.
-			memset(dpTable[pieces], -1, sizeof dpTable[pieces]);
-		}
-		int ans = getMaximumNumberOfGroupsWithFreshPacks(groupCounts, 0, piecesPerPack);
-		printf("Case #%d: %d\n", testNumber, ans);
-	}
+  int numberOfTests; scanf("%d", &numberOfTests);
+  for (int testNumber = 1; testNumber <= numberOfTests; testNumber++) {
+    int numberOfGroups, piecesPerPack;
+    scanf("%d%d", &numberOfGroups, &piecesPerPack);
+    vector<int> groupCounts(4, 0);
+    for (int groupIndex = 0; groupIndex < numberOfGroups; groupIndex++) {
+      int numberOfPeopleInGroup;
+      scanf("%d",&numberOfPeopleInGroup);
+      groupCounts[numberOfPeopleInGroup % piecesPerPack]++;
+    }
+    for (int pieces = 0; pieces < piecesPerPack; pieces++) {
+      // Fill dpTable with 0xff bytes, which is equal to -1 casted as int.
+      // memset is very fast as it uses SSE instructions.
+      memset(dpTable[pieces], -1, sizeof dpTable[pieces]);
+    }
+    int ans = getMaximumNumberOfGroupsWithFreshPacks(
+      groupCounts, 0, piecesPerPack);
+    printf("Case #%d: %d\n", testNumber, ans);
+  }
 }

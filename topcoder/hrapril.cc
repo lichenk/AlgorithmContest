@@ -17,42 +17,10 @@ typedef pair<ll,ll> pll;
 typedef vector<ll> vll;
 typedef pair<int,int> pii;
 typedef vector<int> vii;
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+int rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-int readInt()
-{
-    readAhead(16);
-
-    int x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  int x; scanf("%d",&x); return x;
 }
 
 
@@ -226,10 +194,10 @@ void fullCentroidDecomposition(int initv,int p,int n) {
 int main() 
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-  int n=readInt();
-  for (int i=0;i<n;i++) weight[i]=readInt();
+  int n=rint();
+  for (int i=0;i<n;i++) weight[i]=rint();
   for (int i=1;i<n;i++) {
-    int x=readInt(),y=readInt();
+    int x=rint(),y=rint();
     g[x].PB(y); g[y].PB(x);
   }
 	fullCentroidDecomposition(1,-1,n);

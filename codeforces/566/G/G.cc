@@ -43,57 +43,25 @@ vector<point> convexHullAllowStraightEdges(vector<point> points) {
 	return h;
 }
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+long long rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-long long readInt()
-{
-    readAhead(16);
-
-    long long x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  long long x; scanf("%lld",&x); return x;
 }
 
 int main()
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	ll n=readInt(),m=readInt();
-	ll ox=readInt(),oy=readInt();
+	ll n=rint(),m=rint();
+	ll ox=rint(),oy=rint();
 	set<point> vmin,vmax;
 	for (ll i=0;i<n;i++) {
-		ll x=readInt(),y=readInt();
+		ll x=rint(),y=rint();
 		vmax.insert(MP(x,y));
 	}
 	ll xhi=0,yhi=0;
 	for (ll i=0;i<m;i++) {
-		ll x=readInt(),y=readInt();
+		ll x=rint(),y=rint();
 		vmin.insert(MP(x,y));
 		chkmax(xhi,x); chkmax(yhi,y);
 	}

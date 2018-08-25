@@ -25,50 +25,14 @@ typedef vector<vi> vvi;
 #else 
 #define dbg(...)   /****nothing****/
 #endif
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+long long rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
+  long long x; scanf("%lld",&x); return x;
 }
-
-ll readInt()
+char rch()
 {
-    readAhead(16);
-
-    ll x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
-}
-char readCh()
-{
-    readAhead(16);
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    char ans=*stdinPos;
-    ++stdinPos;
-    return ans;
+  char x; scanf("%c",&x); return x;
 }
 const int mn=20+4;
 int vbug[mn],vstu[mn],vpass[mn];
@@ -76,12 +40,12 @@ int vassign[mn];
 int main() 
 {
   ios_base::sync_with_stdio(false); cin.tie(0);
-  int ns=readInt(),nb=readInt(),passlim=readInt();
+  int ns=rint(),nb=rint(),passlim=rint();
   for (ll x=0;x<nb;x++) {
-    vbug[x]=readInt();
+    vbug[x]=rint();
   }
-  for (ll x=0;x<ns;x++) vstu[x]=readInt();
-  for (ll x=0;x<ns;x++) vpass[x]=readInt();
+  for (ll x=0;x<ns;x++) vstu[x]=rint();
+  for (ll x=0;x<ns;x++) vpass[x]=rint();
   int imin=1000000000;
   for (int k=0;k<5000000;k++) {
     if (0==(k&0xff)) srand(time(0)+clock()+rand());

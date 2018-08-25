@@ -16,42 +16,10 @@ template<typename T> inline bool chkmin(T &aa, T bb) { return aa > bb ? aa = bb,
 typedef pair<ll,ll> pll;
 typedef vector<ll> vll;
 
-static char stdinBuffer[1024];
-static char* stdinDataEnd = stdinBuffer + sizeof (stdinBuffer);
-static const char* stdinPos = stdinDataEnd;
 
-void readAhead(size_t amount)
+long long rint()
 {
-    size_t remaining = stdinDataEnd - stdinPos;
-    if (remaining < amount) {
-       memmove(stdinBuffer, stdinPos, remaining);
-       size_t sz = fread(stdinBuffer + remaining, 1, sizeof (stdinBuffer) - remaining, stdin);
-       stdinPos = stdinBuffer;
-       stdinDataEnd = stdinBuffer + remaining + sz;
-       if (stdinDataEnd != stdinBuffer + sizeof (stdinBuffer))
-         *stdinDataEnd = 0;
-    }
-}
-
-ll readInt()
-{
-    readAhead(16);
-
-    ll x = 0;
-    bool neg = false;
-    while(*stdinPos==' '||*stdinPos=='\n') ++stdinPos;
-    if (*stdinPos == '-') {
-       ++stdinPos;
-       neg = true;
-    }
-
-    while (*stdinPos >= '0' && *stdinPos <= '9') {
-       x *= 10;
-       x += *stdinPos - '0';
-       ++stdinPos;
-    }
-
-    return neg ? -x : x;
+  long long x; scanf("%lld",&x); return x;
 }
 
 ll segn;
@@ -149,8 +117,8 @@ ll va[mn],vna[mn],tf[2*mn];
 int main()
 {
 	ios_base::sync_with_stdio(false); cin.tie(0);
-	int n=readInt(),s=readInt(),l=readInt();
-  for (int i=0;i<n;i++) va[i]=readInt();
+	int n=rint(),s=rint(),l=rint();
+  for (int i=0;i<n;i++) va[i]=rint();
   for (int i=0;i<n;i++) vna[i]=-va[i];
   RmqSparseTable tmin=RmqSparseTable(va,n);
   RmqSparseTable tmax=RmqSparseTable(vna,n);
