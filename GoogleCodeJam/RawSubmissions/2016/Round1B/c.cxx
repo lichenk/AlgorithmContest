@@ -14,6 +14,7 @@ struct edge {
 	ll a, b, cap, flow;
 };
 /*
+Dinic's max flow algorithm adapted from http://e-maxx.ru/algo/dinic
 Set
 dinic_numnodes: number of nodes
 dinic_src: Source vertex
