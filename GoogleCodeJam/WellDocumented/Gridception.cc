@@ -94,11 +94,11 @@ int dfs(int row, int column, int numberOfRows, int numberOfColumns) {
   return ans;
 }
 
-// Consider all grids which can be formed by expanding the input starting grid.
-// This function returns the maximum pattern size such that the pattern matches
-// at least a googol (10^100) these grids.
+// Gets all 2x2 subgrids of the original starting grid
 // Preconditions: The number of rows and columns must not be 0.
-int getMaximumPatternSize(const vector<string> &startingGrid) {
+// Each string in the set contains the top-left, top-right, bottom-left, and
+// bottom-right colors of the 2x2 subgrids, in that order.
+set<string> getTwoByTwoSubgrids(const vector<string> &startingGrid) {
   int numberOfRows = (int)startingGrid.size();
   assert(numberOfRows > 0);
   int numberOfColumns = (int)startingGrid[0].size();
@@ -121,6 +121,21 @@ int getMaximumPatternSize(const vector<string> &startingGrid) {
       twoByTwoSubgrids.insert(twoByTwoSubgrid);
     }
   }
+  return twoByTwoSubgrids;
+}
+
+// Consider all grids which can be formed by expanding the input starting grid.
+// This function returns the maximum pattern size such that the pattern matches
+// at least a googol (10^100) these grids.
+// Preconditions: The number of rows and columns must not be 0.
+int getMaximumPatternSize(const vector<string> &startingGrid) {
+  int numberOfRows = (int)startingGrid.size();
+  assert(numberOfRows > 0);
+  int numberOfColumns = (int)startingGrid[0].size();
+  assert(numberOfColumns > 0);
+
+  // Get all possible 2x2 subgrids of the starting grid.
+  set<string> twoByTwoSubgrids = getTwoByTwoSubgrids(startingGrid);
 
   int maximumPatternSize = 0;
   // Try every possible 2x2 subgrid
